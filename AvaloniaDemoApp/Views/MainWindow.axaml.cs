@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace AvaloniaDemoApp.Views
 {
-    public partial class SettingsView : UserControl
+    public partial class MainWindow : Window
     {
-        public SettingsView()
+        public MainWindow()
         {
             InitializeComponent();
         }
