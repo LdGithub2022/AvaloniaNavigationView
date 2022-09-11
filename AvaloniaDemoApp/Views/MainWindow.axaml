@@ -1,89 +1,88 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:AvaloniaDemoApp.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
-        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="AvaloniaDemoApp.Views.MainWindow"
+<Window x:Class="AvaloniaDemoApp.Views.MainWindow"
+        xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:model="using:AvaloniaDemoApp.Models" xmlns:vm="using:AvaloniaDemoApp.ViewModels"
+        Title="AvaloniaDemoApp"
+        d:DesignHeight="450" d:DesignWidth="800"
+        x:CompileBindings="True" x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="AvaloniaDemoApp">
+        mc:Ignorable="d">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
-	<Window.Styles>
-		<Style Selector="ListBoxItem">
-			<Setter Property="Height" Value="48"/>
-			<Setter Property="Background" Value="Transparent" />
-			<Setter Property="BorderThickness" Value="0" />
-			<Setter Property="Foreground" Value="White" />
-			<Setter Property="Margin" Value="0" />
-			<Setter Property="Padding" Value="0" />
-			<Setter Property="HorizontalAlignment" Value="Stretch"/>
-			<Setter Property="VerticalAlignment" Value="Stretch" />
-			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-			<Setter Property="VerticalContentAlignment" Value="Stretch" />
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type ListBoxItem}">
-						<Grid x:Name="RootGrid">
-							<Border x:Name="Background"
-									BorderThickness="0"
-									Background="{TemplateBinding Background}">
-								<Grid>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="48"/>
-										<ColumnDefinition Width="*"/>
-									</Grid.ColumnDefinitions>
+    <Window.Styles>
+        <Style Selector="ListBoxItem">
+            <Setter Property="Height" Value="48" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate x:DataType="model:NavigationViewItem" TargetType="{x:Type ListBoxItem}">
+                        <Grid x:Name="RootGrid">
+                            <Border x:Name="Background"
+                                    Background="{TemplateBinding Background}"
+                                    BorderThickness="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="48" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
 
-									<ContentControl
-										HorizontalAlignment="Center"
-										VerticalAlignment="Center"
-										Content="{Binding Icon}"
-										Focusable="False"/>
+                                    <ContentControl HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                    Content="{Binding Icon}"
+                                                    Focusable="False" />
 
-									<TextBlock Grid.Column="1"
-											   Text="{Binding Label}"
-											   VerticalAlignment="Center"
-											   FontFamily="Segoe UI"
-											   FontWeight="SemiLight"
-											   FontSize="16"/>
-								</Grid>
-							</Border>
-						</Grid>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
+                                    <TextBlock Grid.Column="1"
+                                               VerticalAlignment="Center"
+                                               FontFamily="Segoe UI" FontSize="16"
+                                               FontWeight="SemiLight"
+                                               Text="{Binding Label}" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-		<Style Selector="ListBoxItem:selected /template/ Rectangle#SelectionIndicator">
-			<Setter Property="Fill" Value="Green" />
-		</Style>
-		<Style Selector="ListBoxItem:selected /template/ Border#Background">
-			<Setter Property="Background" Value="Black" />
-		</Style>
-		<Style Selector="ListBoxItem:pointerover /template/ Border#Background">
-			<Setter Property="Background" Value="Red" />
-		</Style>
-	</Window.Styles>
-	
-	
-	<StackPanel Orientation="Horizontal">
-		<ListBox Width="240" 
-				 Items="{Binding MenuItems}"
-				 SelectedItem="{Binding SelectedMenuItem}">
-			<i:Interaction.Behaviors>
-				<ia:EventTriggerBehavior EventName="SelectionChanged">
-					<ia:InvokeCommandAction Command="{Binding MenuItemInvokedCommand}"/>
-				</ia:EventTriggerBehavior>
-			</i:Interaction.Behaviors>
-		</ListBox>
-		
-		<ContentControl Content="{ Binding CurrentViewModel}"/>
-	</StackPanel>
+        <Style Selector="ListBoxItem:selected /template/ Rectangle#SelectionIndicator">
+            <Setter Property="Fill" Value="Green" />
+        </Style>
+        <Style Selector="ListBoxItem:selected /template/ Border#Background">
+            <Setter Property="Background" Value="Black" />
+        </Style>
+        <Style Selector="ListBoxItem:pointerover /template/ Border#Background">
+            <Setter Property="Background" Value="Red" />
+        </Style>
+
+        <Style Selector="ListBoxItem:selected">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style Selector="ListBoxItem:pointerover">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+
+
+
+    </Window.Styles>
+
+
+    <StackPanel Orientation="Horizontal">
+        <ListBox Width="240"
+                 Items="{Binding MenuItems}"
+                 SelectedItem="{Binding SelectedMenuItem}" />
+
+        <ContentControl Content="{Binding CurrentViewModel}" />
+    </StackPanel>
 
 
 </Window>
