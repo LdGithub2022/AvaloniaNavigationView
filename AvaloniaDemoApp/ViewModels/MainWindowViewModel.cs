@@ -11,6 +11,12 @@ namespace AvaloniaDemoApp.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        public MainWindowViewModel()
+        {
+            // Listen to changes of SelectedMenuItem and do navigation when changed. 
+            this.WhenAnyValue(x => x.SelectedMenuItem)
+                .Subscribe(_ => OnMenuItemInvoked());
+        }
 
         private NavigationViewItem? _selectedMenuItem;
         public NavigationViewItem? SelectedMenuItem
@@ -33,10 +39,6 @@ namespace AvaloniaDemoApp.ViewModels
         new NavigationViewItem { Label = "Second", Icon = null, Target = typeof(SecondViewModel) },
         new NavigationViewItem { Label = "Settings", Icon = null, Target = typeof(SettingsViewModel) }
         };
-
-        private ICommand? _menuItemInvokedCommand;
-        public ICommand? MenuItemInvokedCommand => _menuItemInvokedCommand ??= ReactiveCommand.Create(OnMenuItemInvoked);
-
 
         private void OnMenuItemInvoked()
         {
